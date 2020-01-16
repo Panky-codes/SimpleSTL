@@ -4,3 +4,4 @@ compiler:
   - g++
 script:
   cmake .
+  make
