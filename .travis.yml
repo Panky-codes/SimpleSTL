@@ -1,0 +1,6 @@
+dist: bionic
+language: cpp
+compiler:
+  - g++
+script:
+  cmake .
