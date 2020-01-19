@@ -15,7 +15,6 @@ matrix:
     script:
       - cmake -DCMAKE_CXX_COMPILER="g++" ..
       - make
-      - make test
 
   #
   # Clang 
@@ -26,4 +25,16 @@ matrix:
     script:
       - cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
       - make
-      - make test
+
+  #
+  # Codecov
+  #
+  - os: linux
+    env:
+      - TEST="Codecov"
+    script:
+      - cmake -DENABLE_COVERAGE=ON -DCMAKE_CXX_COMPILER="g++" ..
+      - make
+      - cd ..
+      - bash <(curl -s https://codecov.io/bash)
+ 
