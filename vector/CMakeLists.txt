@@ -2,6 +2,7 @@
 project(Vector CXX)
 include_directories(${PROJECT_SOURCE_DIRECTORIES} .)
 add_executable(Vector vector.h test/tests-main.cpp)
+add_test(test_vector Vector)
 # Executable with sanitizers 
 add_executable(Vectordbg vector.h test/tests-main.cpp)
 target_link_libraries(Vectordbg asan )
@@ -22,4 +23,4 @@ set_target_properties(Vectordbg PROPERTIES
     COMPILE_FLAGS "-Wall -Wextra -fsanitize=address -Wpedantic -Werror"
 )
 # Run the tests on every build  
-add_custom_target(test_vector ALL DEPENDS Vector COMMAND Vector)
+#add_custom_target(test_vector ALL DEPENDS Vector COMMAND Vector)
