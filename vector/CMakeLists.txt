@@ -1,9 +1,9 @@
 # Name the project after the exercise
 project(Vector CXX)
 include_directories(${PROJECT_SOURCE_DIRECTORIES} .)
-add_executable(Vector Vector.h test/tests-main.cpp)
+add_executable(Vector vector.h test/tests-main.cpp)
 # Executable with sanitizers 
-add_executable(Vectordbg Vector.h test/tests-main.cpp)
+add_executable(Vectordbg vector.h test/tests-main.cpp)
 target_link_libraries(Vectordbg asan )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

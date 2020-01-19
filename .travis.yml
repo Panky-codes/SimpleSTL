@@ -1,10 +1,29 @@
 dist: bionic
 language: cpp
-compiler:
-  - g++
 before_script:
   - mkdir build
   - cd build
-  - cmake ..
-script:
-  make
+
+matrix:
+  include:
+  #
+  # G++ 
+  #
+  - os: linux
+    env:
+      - TEST="G++ 6"
+    script:
+      - cmake -DCMAKE_CXX_COMPILER="g++" ..
+      - make
+      - make test
+
+  #
+  # Clang 
+  #
+  - os: linux
+    env:
+      - TEST="Clang 3.8"
+    script:
+      - cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
+      - make
+      - make test

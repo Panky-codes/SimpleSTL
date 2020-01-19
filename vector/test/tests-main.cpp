@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <algorithm>
 
-#include "Vector.h"
+#include "vector.h"
 #include "catch.hpp"
 template <typename T>
 void printvector(PR::vector<T> to_print) {
