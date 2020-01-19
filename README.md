@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Panky-codes/SimpleSTL.svg?branch=master)](https://travis-ci.org/Panky-codes/SimpleSTL)
+[![codecov](https://codecov.io/gh/Panky-codes/SimpleSTL/branch/master/graph/badge.svg)](https://codecov.io/gh/Panky-codes/SimpleSTL)
 
 # SimpleSTL 
 A simple C++ STL code to understand the basic concepts going underneath the implementation. 
