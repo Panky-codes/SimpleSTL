@@ -40,4 +40,35 @@ matrix:
       - make test
       - cd ..
       - bash <(curl -s https://codecov.io/bash)
+
+  #
+  # Google Address Sanitizer
+  #
+  - os: linux
+    env:
+      - TEST="Google Address Sanitizer"
+    script:
+      - cmake -DENABLE_ASAN=ON -DCMAKE_CXX_COMPILER=clang++ ..
+      - make
+      - make test
+
+  #
+  # Google Undefined Sanitizer
+  #
+  - os: linux
+    script:
+      - cmake -DENABLE_USAN=ON -DCMAKE_CXX_COMPILER=clang++ ..
+      - make
+      - make test
+
+  #
+  # Google Thread Sanitizer
+  #
+  - os: linux
+    env:
+      - TEST="Google Thread Sanitizer"
+    script:
+      - cmake -DENABLE_TSAN=ON -DCMAKE_CXX_COMPILER=clang++ ..
+      - make
+      - make test
  

@@ -41,7 +41,7 @@ class vector {
         std::copy(from_vec.cbegin(), from_vec.cend(), vec_ptr);
     }
     // move constructor
-    vector(vector&& from_vec) noexcept : sz{0}, cap{sz}, vec_ptr(new T(sz)) {
+    vector(vector&& from_vec) noexcept : sz{0}, cap{sz}, vec_ptr(new T[sz]) {
         // call move assignment now
         /* std::cout << "Move constructer \n"; */
         *this = std::move(from_vec);
