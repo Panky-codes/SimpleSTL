@@ -20,7 +20,7 @@ parsers:
       macro: no
 
 ignore:
-  -  "vector/test/*"
+  -  "tests/*"
 
 comment:
   layout: "reach,diff,flags,tree"

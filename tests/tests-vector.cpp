@@ -1,8 +1,8 @@
 #define CATCH_CONFIG_MAIN
 #include <algorithm>
 
-#include "vector.h"
 #include "catch.hpp"
+#include "vector.h"
 template <typename T>
 void printvector(PR::vector<T> to_print) {
     for (const auto& elem : to_print) {
@@ -69,13 +69,25 @@ TEST_CASE("Push back functionality") {
     int actual_value = 10;
     // Do two push backs to verify it doesn't reallocate both the
     // times
-    vec1.push_back(actual_value);
+    vec1.push_back(10);  // touches rvalue reference condition
     vec1.push_back(actual_value);
 
     REQUIRE(vec1.back() == actual_value);
     REQUIRE(vec1.front() == 1);
     REQUIRE(vec1.size() == 6);
     REQUIRE(vec1.capacity() == 8);
+}
+
+TEST_CASE("Push back with no memory allocated") {
+    PR::vector<int> vec1;
+    int actual_value = 10;
+    // Do two push backs to verify it doesn't reallocate both the
+    // times
+    vec1.push_back(10);  // touches rvalue reference condition
+    vec1.push_back(actual_value + 1);
+
+    REQUIRE(vec1.back() == actual_value + 1);
+    REQUIRE(vec1.front() == actual_value);
 }
 
 TEST_CASE("Push back functionality with string container") {
@@ -91,6 +103,34 @@ TEST_CASE("Push back functionality with string container") {
     REQUIRE(vec1.capacity() == 4);
 }
 
+TEST_CASE(
+    "Push back functionality with string container and no memory initially "
+    "allocated") {
+    PR::vector<std::string> vec1;
+    std::string actual_front_value = "!";
+    std::string actual_back_value = "Hello";
+    // Do two push backs to verify it doesn't reallocate both the
+    // times
+    vec1.push_back(actual_front_value);
+    vec1.push_back(actual_back_value);
+
+    REQUIRE(vec1.back() == actual_back_value);
+    REQUIRE(vec1.front() == actual_front_value);
+}
+
+TEST_CASE("Emplace back with no memory allocated") {
+    PR::vector<PR::vector<int>> vec1;
+    PR::vector<int> actual_front_value{1, 2};
+    PR::vector<int> actual_back_value{1, 3};
+    // Do two push backs to verify it doesn't reallocate both the
+    // times
+    vec1.emplace_back(actual_front_value);
+    vec1.emplace_back(actual_back_value);
+
+    REQUIRE(vec1.back() == actual_back_value);
+    REQUIRE(vec1.front() == actual_front_value);
+}
+
 TEST_CASE("emplace back functionality") {
     PR::vector<std::string> vec1(2, std::string("Yello"));
     // Do two push backs to verify it doesn't reallocate both the
@@ -101,6 +141,7 @@ TEST_CASE("emplace back functionality") {
     REQUIRE(vec1.size() == 3);
     REQUIRE(vec1.capacity() == 4);
 }
+
 TEST_CASE("Shrink to fit") {
     PR::vector<int> vec1{1, 2, 5, 3};
     int actual_value = 10;
@@ -305,12 +346,22 @@ TEST_CASE("Swap vector of strings") {
     REQUIRE(vec1[2] == "!!!");
 }
 
-TEST_CASE("Resize vector of ints") {
+TEST_CASE("Resize vector of ints with two parameters") {
     PR::vector<int> vec1{1, 2, 3};
 
     vec1.resize(5, 6);
     REQUIRE(vec1.size() == 5);
     REQUIRE(vec1.back() == 6);
+    vec1.resize(2);
+    REQUIRE(vec1.size() == 2);
+}
+
+TEST_CASE("Resize vector of ints with one parameter") {
+    PR::vector<int> vec1{1, 2, 3};
+
+    vec1.resize(5);
+    REQUIRE(vec1.size() == 5);
+    REQUIRE(vec1.back() == 0);
     vec1.resize(2);
     REQUIRE(vec1.size() == 2);
 }
@@ -325,4 +376,12 @@ TEST_CASE("Reverse iterator check") {
     }
 }
 
+TEST_CASE("Opertor <<") {
+    PR::vector<int> vec1{1, 2, 3};
+    std::stringstream ss;
+
+    ss << vec1;
+
+    REQUIRE(ss.str() == "1 2 3 ");
+}
 #endif

@@ -164,7 +164,7 @@ bool vector<T>::operator==(const vector<T>& rhs_vec) const {
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const vector<T>& rhs_vec) {
     for (const auto& elem : rhs_vec) {
-        os << elem << '\n';
+        os << elem << ' ';
     }
     return os;
 }

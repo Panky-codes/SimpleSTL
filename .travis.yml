@@ -11,7 +11,7 @@ matrix:
   #
   - os: linux
     env:
-      - TEST="G++ 6"
+      - TEST="G++"
     script:
       - cmake -DCMAKE_CXX_COMPILER="g++" ..
       - make
@@ -22,7 +22,7 @@ matrix:
   #
   - os: linux
     env:
-      - TEST="Clang 3.8"
+      - TEST="Clang"
     script:
       - cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
       - make
@@ -48,7 +48,7 @@ matrix:
     env:
       - TEST="Google Address Sanitizer"
     script:
-      - cmake -DENABLE_ASAN=ON -DCMAKE_CXX_COMPILER=clang++ ..
+      - cmake -DENABLE_ASAN=ON ..
       - make
       - make test
 
@@ -56,8 +56,10 @@ matrix:
   # Google Undefined Sanitizer
   #
   - os: linux
+    env:
+      - TEST="Google Undefined Behaviour Sanitizer"
     script:
-      - cmake -DENABLE_USAN=ON -DCMAKE_CXX_COMPILER=clang++ ..
+      - cmake -DENABLE_USAN=ON ..
       - make
       - make test
 
@@ -68,7 +70,23 @@ matrix:
     env:
       - TEST="Google Thread Sanitizer"
     script:
-      - cmake -DENABLE_TSAN=ON -DCMAKE_CXX_COMPILER=clang++ ..
+      - cmake -DENABLE_TSAN=ON ..
       - make
       - make test
+  #
+  # Valgrind
+  #
+  - os: linux
+    env:
+      - TEST="Valgrind"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - valgrind
+    script:
+      - cmake ..
+      - make
+      - ctest -T memcheck
  
