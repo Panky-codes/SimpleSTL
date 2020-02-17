@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace PR {
+namespace SSTL {
 template <typename T>
 class vector {
    public:
@@ -528,4 +528,4 @@ void vector<T>::resize(typename vector<T>::size_type count,
     }
     sz = count;
 }
-}  // namespace PR
+}  // namespace SSTL
