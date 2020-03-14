@@ -103,12 +103,13 @@ class vector {
     iterator insert(const_iterator pos, const_reference value);
     iterator insert(const_iterator pos, T&& value);
     iterator insert(const_iterator pos, size_t count, const_reference value);
-    template <typename input_iterator,
-              std::enable_if_t<
-                  std::is_base_of<typename std::iterator_traits<
-                                      input_iterator>::iterator_category,
-                                  std::random_access_iterator_tag>::value,
-                  bool> = true>
+    template <
+        typename input_iterator,
+        std::enable_if_t<
+            std::is_base_of<std::input_iterator_tag,
+                            typename std::iterator_traits<
+                                input_iterator>::iterator_category>::value,
+            bool> = true>
     iterator insert(const_iterator pos, input_iterator first,
                     input_iterator last);
 
@@ -479,12 +480,12 @@ typename vector<T>::iterator vector<T>::insert(
 }
 
 template <typename T>
-template <
-    typename input_iterator,
-    std::enable_if_t<std::is_base_of<typename std::iterator_traits<
-                                         input_iterator>::iterator_category,
-                                     std::random_access_iterator_tag>::value,
-                     bool>>
+template <typename input_iterator,
+          std::enable_if_t<
+              std::is_base_of<std::input_iterator_tag,
+                              typename std::iterator_traits<
+                                  input_iterator>::iterator_category>::value,
+              bool>>
 typename vector<T>::iterator vector<T>::insert(
     typename vector<T>::const_iterator pos, input_iterator first,
     input_iterator last) {
